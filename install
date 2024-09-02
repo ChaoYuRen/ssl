@@ -1,0 +1,15 @@
+centos7 续更ssl 安装环境 certbot
+
+yum install install python3
+
+pip3 install -i https://mirrors.aliyun.com/pypi/simple certbot
+pip3 install -i https://mirrors.aliyun.com/pypi/simple certbot-nginx
+pip3 install pyOpenSSL==23.1.1
+
+申请
+
+certbot certonly --standalone --email 'sss@163.com' -d 'www.aaaa.com' 
+cron续更任务
+
+#Let’s
+30 11 * */3 * /usr/local/bin/certbot renew --renew-hook "/usr/sbin/nginx -s reload" > /dev/null 2>&1
