@@ -30,3 +30,30 @@ renew_hook = systemctl start nginx
 如果需要自动续期，不关闭ngx，可以编辑 Certbot 的配置文件（/etc/letsencrypt/renewal/www.aaaa.com.conf），确保以下内容：ini复制[renewalparams]
 authenticator = webroot
 webroot_path = /var/www/html 
+
+====
+用法:
+  certbot [子命令] [选项] [-d 域名] [-d 域名] ...
+Certbot工具用于获取和安装 HTTPS/TLS/SSL 证书。默认情况下，Certbot会尝试为本地网页服务器
+(如果不存在会默认安装一个到本地)获取并安装证书。最常用的子命令和选项如下:
+​
+获取, 安装, 更新证书:
+    (默认) run       获取并安装证书到当前网页服务器
+    certonly        获取或更新证书，但是不安装
+    renew           更新已经获取但快过期的所有证书
+   -d 域名列表        指定证书对应的域名列表，域名之间使用逗号分隔
+​
+  --apache          使用Apache插件进行身份认证和安装
+  --standalone      运行一个独立的网页服务器用于身份认证
+  --nginx           使用Nginx插件进行身份认证和安装
+  --webroot         把身份认证文件放置在服务器的网页根目录下
+  --manual          使用交互式或脚本钩子的方式获取证书
+​
+   -n               非交互式运行
+  --test-cert       从预交付服务器上获取测试证书
+  --dry-run         测试获取或更新证书，但是不存储到本地硬盘
+​
+证书管理:
+    certificates    显示使用Certbot生成的所有证书的信息
+    revoke          撤销证书(supply --cert-path)
+    delete          删除证书
