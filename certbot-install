@@ -1,3 +1,5 @@
+申请Let’s Encrypt的90天免费ssl证书
+
 centos7 续更ssl 安装环境 certbot
 
 yum install install python3
@@ -13,3 +15,18 @@ cron续更任务
 
 #Let’s
 30 11 * */3 * /usr/local/bin/certbot renew --renew-hook "/usr/sbin/nginx -s reload" > /dev/null 2>&1
+
+cron续更任务自动续期不成功是使用了独立模式（standalone） 续期需要先关闭ngx，再运行续更脚本
+
+cat /etc/letsencrypt/renewal/www.aaaa.com.conf 
+
+[renewalparams]
+account = 4ee1116128e345ba487e434c290e69d1
+authenticator = standalone
+server = https://acme-v02.api.letsencrypt.org/directory
+renew_hook = systemctl start nginx 
+ 
+
+如果需要自动续期，不关闭ngx，可以编辑 Certbot 的配置文件（/etc/letsencrypt/renewal/www.aaaa.com.conf），确保以下内容：ini复制[renewalparams]
+authenticator = webroot
+webroot_path = /var/www/html 
